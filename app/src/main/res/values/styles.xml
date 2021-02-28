@@ -1,0 +1,53 @@
+<resources>
+
+    <style name="AppTheme.Splash">
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorBackgroundFloating">?colorSurface</item>
+
+        <item name="colorOnBackground">@color/onBackground</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/onSurface</item>
+
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primaryVariant</item>
+        <item name="colorOnPrimary">@color/onPrimary</item>
+
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorSecondaryVariant">@color/secondaryVariant</item>
+        <item name="colorOnSecondary">@color/onSecondary</item>
+
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">@color/onError</item>
+
+        <item name="android:statusBarColor">@color/systemBars</item>
+        <item name="android:navigationBarColor">@color/systemBars</item>
+
+        <item name="materialAlertDialogTheme">@style/MaterialDialogTheme</item>
+
+        <item name="snackbarStyle">@style/AppStyle.Snackbar</item>
+        <item name="snackbarTextViewStyle">@style/AppStyle.Snackbar.Text</item>
+        <item name="snackbarButtonStyle">@style/AppStyle.Snackbar.Button</item>
+
+        <item name="android:lineSpacingMultiplier">1.25</item>
+
+    </style>
+
+    <style name="MaterialDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog" />
+
+    <style name="AppStyle.Snackbar" parent="Widget.MaterialComponents.Snackbar">
+        <!-- custom style -->
+    </style>
+
+    <style name="AppStyle.Snackbar.Text" parent="Widget.MaterialComponents.Snackbar.TextView">
+        <item name="android:maxLines">4</item>
+    </style>
+
+    <style name="AppStyle.Snackbar.Button" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
+        <!-- custom style -->
+    </style>
+
+</resources>
