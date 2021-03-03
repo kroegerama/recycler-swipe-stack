@@ -2,13 +2,12 @@ package com.kroegerama.reswista
 
 import androidx.annotation.IntDef
 import androidx.recyclerview.widget.ItemTouchHelper
-import com.kroegerama.kaiteki.dpToPx
 
 data class SwiperConfig(
-    val showCount: Int = 5,
-    val itemScale: Float = 0.01f,
-    val itemTranslate: Int = 20.dpToPx(),
-    val itemRotation: Float = 15f,
+    val showCount: Int = 1,
+    val itemScale: Float = 0f,
+    val itemTranslate: Float = 0f,
+    val itemRotation: Float = 0f,
 
     @SwipeDirection
     val swipeDirections: Int = SwipeDirection.ALL,

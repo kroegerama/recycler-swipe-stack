@@ -19,26 +19,26 @@ implementation("com.kroegerama:recycler-swipe-stack:$VERSION")
 
 ---
 
-##### Preview
+### Preview
 
 ![Preview](design/preview.gif)
 
-##### Usage
+### Usage
 
-###### 1. Create your `SwiperConfig`
+#### 1. Create your `SwiperConfig`
 
 ```kotlin
 val config = SwiperConfig(
     showCount = 5,
     swipeDirections = SwipeDirection.LEFT or SwipeDirection.RIGHT or SwipeDirection.UP,
     stackDirection = StackDirection.Down,
-    itemTranslate = 20.dpToPx(),
+    itemTranslate = 0.02f,
     itemRotation = 15f,
     itemScale = .0f
 )
 ```
 
-###### 2. Create a `SwipeListener`
+#### 2. Create a `SwipeListener`
 
 ```kotlin
 private val listener = object : SwipeListener {
@@ -61,18 +61,37 @@ private val listener = object : SwipeListener {
         Timber.d("onSwipeEnd()")
     }
 
-    override fun isSwipeAllowed(viewHolder: RecyclerView.ViewHolder) = viewHolder is ViewBindingBaseViewHolder<*, *>
+    override fun isSwipeAllowed(viewHolder: RecyclerView.ViewHolder) = viewHolder is MyViewHolder
 }
 ```
 
-###### 3. Create an `ItemTouchHelper` and a `StackLayoutManager`
+#### 3. Setup the library
+
+##### 3a Use the helper function
+
+```kotlin
+recycler.setupStack(
+    config,
+    listener
+) {
+    itemAnimator = DefaultItemAnimator().apply {
+        addDuration = 200
+        removeDuration = 200
+    }
+    adapter = myAdapter
+}
+```
+
+##### 3b Or setup the classes yourself
+
+###### Create an `ItemTouchHelper` and a `StackLayoutManager`
 
 ```kotlin
 val itemTouchHelper = ItemTouchHelper(StackSwipeTouchHelperCallback(listener, config))
 val layoutManager = StackLayoutManager(config)
 ```
 
-###### 4. Setup your `RecyclerView`
+###### Setup your `RecyclerView`
 
 ```kotlin
 recycler.layoutManager = layoutManager

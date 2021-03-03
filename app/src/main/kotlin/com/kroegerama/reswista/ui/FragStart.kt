@@ -4,19 +4,16 @@ import android.animation.ArgbEvaluator
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.kroegerama.kaiteki.baseui.ViewBindingFragment
-import com.kroegerama.kaiteki.dpToPx
 import com.kroegerama.kaiteki.recyclerview.ViewBindingBaseViewHolder
 import com.kroegerama.reswista.R
 import com.kroegerama.reswista.StackDirection
-import com.kroegerama.reswista.StackLayoutManager
-import com.kroegerama.reswista.StackSwipeTouchHelperCallback
 import com.kroegerama.reswista.SwipeDirection
 import com.kroegerama.reswista.SwipeListener
 import com.kroegerama.reswista.SwiperConfig
 import com.kroegerama.reswista.databinding.FragStartBinding
+import com.kroegerama.reswista.setupStack
 import com.kroegerama.reswista.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -35,25 +32,23 @@ class FragStart : ViewBindingFragment<FragStartBinding>(
             showCount = 5,
             swipeDirections = SwipeDirection.LEFT or SwipeDirection.RIGHT or SwipeDirection.UP,
             stackDirection = StackDirection.Down,
-            itemTranslate = 20.dpToPx(),
+            itemTranslate = 0.02f,
             itemRotation = 15f,
             itemScale = .0f
         )
-        val itemTouchHelper = ItemTouchHelper(StackSwipeTouchHelperCallback(listener, config))
-        val layoutManager = StackLayoutManager(config)
-        val itemAnimator = DefaultItemAnimator().apply {
-            addDuration = 200
-            removeDuration = 200
+        recycler.setupStack(
+            config,
+            listener
+        ) {
+            itemAnimator = DefaultItemAnimator().apply {
+                addDuration = 200
+                removeDuration = 200
+            }
+            adapter = ConcatAdapter(
+                itemAdapter,
+                EndAdapter(::refill)
+            )
         }
-
-        recycler.layoutManager = layoutManager
-        recycler.itemAnimator = itemAnimator
-        itemTouchHelper.attachToRecyclerView(recycler)
-
-        recycler.adapter = ConcatAdapter(
-            itemAdapter,
-            EndAdapter(::refill)
-        )
         refill()
     }
 

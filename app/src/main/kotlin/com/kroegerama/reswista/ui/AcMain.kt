@@ -3,11 +3,11 @@ package com.kroegerama.reswista.ui
 import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.kroegerama.kaiteki.baseui.ViewBindingActivity
 import com.kroegerama.reswista.R
 import com.kroegerama.reswista.controller.Persistence
 import com.kroegerama.reswista.databinding.AcMainBinding
 import com.kroegerama.reswista.viewmodel.MainViewModel
-import com.kroegerama.kaiteki.baseui.ViewBindingActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

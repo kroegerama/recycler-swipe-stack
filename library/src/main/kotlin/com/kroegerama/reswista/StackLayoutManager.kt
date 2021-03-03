@@ -65,12 +65,12 @@ class StackLayoutManager(
     }
 
     private fun View.translateForPosition(pos: Int) {
-        val itemTranslate = config.itemTranslate.toFloat()
+        val itemTranslate = config.itemTranslate
         when (config.stackDirection) {
-            StackDirection.Left -> translationX = -pos * measuredWidth / itemTranslate
-            StackDirection.Up -> translationY = -pos * measuredHeight / itemTranslate
-            StackDirection.Right -> translationX = pos * measuredWidth / itemTranslate
-            StackDirection.Down -> translationY = pos * measuredHeight / itemTranslate
+            StackDirection.Left -> translationX = -pos * measuredWidth * itemTranslate
+            StackDirection.Up -> translationY = -pos * measuredHeight * itemTranslate
+            StackDirection.Right -> translationX = pos * measuredWidth * itemTranslate
+            StackDirection.Down -> translationY = pos * measuredHeight * itemTranslate
         }
     }
 }
