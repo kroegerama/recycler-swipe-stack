@@ -1,11 +1,12 @@
 package com.kroegerama.reswista.ui
 
 import android.animation.ArgbEvaluator
+import android.graphics.Color
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ConcatAdapter
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
 import com.kroegerama.kaiteki.baseui.ViewBindingFragment
+import com.kroegerama.kaiteki.onClick
 import com.kroegerama.kaiteki.recyclerview.ViewBindingBaseViewHolder
 import com.kroegerama.reswista.R
 import com.kroegerama.reswista.StackDirection
@@ -32,24 +33,25 @@ class FragStart : ViewBindingFragment<FragStartBinding>(
             showCount = 5,
             swipeDirections = SwipeDirection.LEFT or SwipeDirection.RIGHT or SwipeDirection.UP,
             stackDirection = StackDirection.Down,
-            itemTranslate = 0.02f,
+            itemTranslate = .03f,
             itemRotation = 15f,
-            itemScale = .0f
+            itemScale = .03f
         )
         recycler.setupStack(
             config,
             listener
         ) {
-            itemAnimator = DefaultItemAnimator().apply {
-                addDuration = 200
-                removeDuration = 200
-            }
             adapter = ConcatAdapter(
                 itemAdapter,
                 EndAdapter(::refill)
             )
         }
         refill()
+
+        var idx = 100
+        btnAdd.onClick {
+            itemAdapter.add(0, ColorString("Test ${idx++}", Color.MAGENTA))
+        }
     }
 
     private fun refill() {
@@ -83,6 +85,6 @@ class FragStart : ViewBindingFragment<FragStartBinding>(
             Timber.d("onSwipeEnd()")
         }
 
-        override fun isSwipeAllowed(viewHolder: RecyclerView.ViewHolder) = viewHolder is ViewBindingBaseViewHolder<*, *>
+        override fun isSwipeAllowed(viewHolder: RecyclerView.ViewHolder) = viewHolder is ViewBindingBaseViewHolder<*>
     }
 }

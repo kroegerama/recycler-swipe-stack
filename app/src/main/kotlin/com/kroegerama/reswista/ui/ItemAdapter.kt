@@ -24,7 +24,7 @@ class ItemAdapter : ViewBindingBaseAdapter<ColorString, ItemCardBinding>(
     }
 
     override fun ItemCardBinding.update(
-        viewHolder: ViewBindingBaseViewHolder<ColorString, ItemCardBinding>,
+        viewHolder: ViewBindingBaseViewHolder<ItemCardBinding>,
         context: Context,
         viewType: Int,
         item: ColorString?

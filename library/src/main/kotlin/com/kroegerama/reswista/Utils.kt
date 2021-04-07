@@ -8,6 +8,7 @@ fun RecyclerView.setupStack(
     listener: SwipeListener,
     block: (RecyclerView.() -> Unit)? = null
 ) {
+    itemAnimator = null
     layoutManager = StackLayoutManager(config)
     ItemTouchHelper(StackSwipeTouchHelperCallback(listener, config)).attachToRecyclerView(this)
     block?.invoke(this)

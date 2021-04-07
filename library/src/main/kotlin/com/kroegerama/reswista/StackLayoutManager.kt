@@ -23,12 +23,13 @@ class StackLayoutManager(
 
                 when {
                     pos == showCount -> {
-                        layout.scaleForPosition(pos - 1)
-                        layout.translateForPosition(pos - 1)
+                        layout.scaleAndTranslateForPosition(pos - 1)
                     }
                     pos > 0 -> {
-                        layout.scaleForPosition(pos)
-                        layout.translateForPosition(pos)
+                        layout.scaleAndTranslateForPosition(pos)
+                    }
+                    pos == 0 -> {
+                        layout.resetTransitions()
                     }
                 }
             }
@@ -37,9 +38,13 @@ class StackLayoutManager(
                 val layout = recycler.getViewForPosition(pos)
                 addAndMeasureView(layout)
 
-                if (pos > 0) {
-                    layout.scaleForPosition(pos)
-                    layout.translateForPosition(pos)
+                when {
+                    pos > 0 -> {
+                        layout.scaleAndTranslateForPosition(pos)
+                    }
+                    pos == 0 -> {
+                        layout.resetTransitions()
+                    }
                 }
             }
         }
@@ -60,17 +65,27 @@ class StackLayoutManager(
         )
     }
 
-    private fun View.scaleForPosition(pos: Int) {
-        scale(1f - pos * config.itemScale)
+    private fun View.resetTransitions() {
+        clearAnimation()
+        scale(1f)
+        translationX = 0f
+        translationY = 0f
+        animate().alpha(1f)
     }
 
-    private fun View.translateForPosition(pos: Int) {
-        val itemTranslate = config.itemTranslate
-        when (config.stackDirection) {
-            StackDirection.Left -> translationX = -pos * measuredWidth * itemTranslate
-            StackDirection.Up -> translationY = -pos * measuredHeight * itemTranslate
-            StackDirection.Right -> translationX = pos * measuredWidth * itemTranslate
-            StackDirection.Down -> translationY = pos * measuredHeight * itemTranslate
+    private fun View.scaleAndTranslateForPosition(pos: Int) {
+        clearAnimation()
+        animate().apply {
+            val scale = 1f - pos * config.itemScale
+            scaleX(scale)
+            scaleY(scale)
+            val itemTranslate = config.itemTranslate
+            when (config.stackDirection) {
+                StackDirection.Left -> translationX(-pos * measuredWidth * itemTranslate)
+                StackDirection.Up -> translationY(-pos * measuredHeight * itemTranslate)
+                StackDirection.Right -> translationX(pos * measuredWidth * itemTranslate)
+                StackDirection.Down -> translationY(pos * measuredHeight * itemTranslate)
+            }
         }
     }
 }
