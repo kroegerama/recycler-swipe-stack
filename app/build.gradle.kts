@@ -91,7 +91,7 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx")
     implementation("androidx.navigation:navigation-ui-ktx")
 
-    val kaiteki = "4.0.4"
+    val kaiteki = "4.1.0"
     implementation("com.kroegerama.android-kaiteki:core:$kaiteki")
     implementation("com.kroegerama.android-kaiteki:recyclerview:$kaiteki")
     implementation("com.kroegerama.android-kaiteki:retrofit:$kaiteki")

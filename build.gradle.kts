@@ -1,10 +1,10 @@
-import io.codearte.gradle.nexus.NexusStagingExtension
+import io.github.gradlenexus.publishplugin.NexusPublishExtension
 
 plugins {
     id(Plugins.androidApplication) apply false
     id(Plugins.androidLibrary) apply false
     kotlin("android") apply false
-    id(Plugins.nexusStaging)
+    id(Plugins.nexusPublish)
 }
 
 allprojects {
@@ -32,15 +32,20 @@ val clean by tasks.creating(Delete::class) {
     delete(rootProject.buildDir)
 }
 
-configure<NexusStagingExtension> {
+configure<NexusPublishExtension> {
     val nexusStagingProfileId: String? by project
     val nexusUsername: String? by project
     val nexusPassword: String? by project
 
-    packageGroup = group.toString()
-    stagingProfileId = nexusStagingProfileId
-    username = nexusUsername
-    password = nexusPassword
+    packageGroup.set(group.toString())
+
+    repositories {
+        sonatype {
+            stagingProfileId.set(nexusStagingProfileId)
+            username.set(nexusUsername)
+            password.set(nexusPassword)
+        }
+    }
 }
 
 afterEvaluate {

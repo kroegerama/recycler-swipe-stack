@@ -53,7 +53,7 @@ dependencies {
     implementation("androidx.core:core-ktx")
     implementation("androidx.recyclerview:recyclerview")
 
-    val kaiteki = "4.0.4"
+    val kaiteki = "4.1.0"
     implementation("com.kroegerama.android-kaiteki:core:$kaiteki")
     implementation("com.kroegerama.android-kaiteki:recyclerview:$kaiteki")
 

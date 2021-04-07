@@ -1,9 +1,9 @@
 import java.util.Properties
 
 repositories {
-    mavenLocal()
     google()
     mavenCentral()
+    gradlePluginPortal()
 }
 
 plugins {
@@ -27,7 +27,7 @@ file("../gradle.properties").inputStream().use { input ->
 dependencies {
     val bom = project.property("magic.bom")
     implementation(platform("com.kroegerama:magic-bom:$bom"))
-    implementation("io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.22.0")
+    implementation("io.github.gradle-nexus:publish-plugin:1.0.0")
 
     implementation(gradleApi())
 

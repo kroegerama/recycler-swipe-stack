@@ -4,7 +4,7 @@ object Plugins {
 
     const val mavenPublish = "maven-publish"
     const val signing = "signing"
-    const val nexusStaging = "io.codearte.nexus-staging"
+    const val nexusPublish = "io.github.gradle-nexus.publish-plugin"
 
     const val kotlinAndroid = "kotlin-android"
     const val kotlinKapt = "kotlin-kapt"
