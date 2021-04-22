@@ -5,8 +5,10 @@ import android.graphics.Color
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.transition.MaterialFadeThrough
 import com.kroegerama.kaiteki.baseui.ViewBindingFragment
 import com.kroegerama.kaiteki.onClick
+import com.kroegerama.kaiteki.postponeUntilLayout
 import com.kroegerama.kaiteki.recyclerview.ViewBindingBaseViewHolder
 import com.kroegerama.reswista.R
 import com.kroegerama.reswista.StackDirection
@@ -28,7 +30,14 @@ class FragStart : ViewBindingFragment<FragStartBinding>(
 
     private val itemAdapter by lazy { ItemAdapter() }
 
+    override fun prepare() {
+        enterTransition = MaterialFadeThrough()
+        exitTransition = MaterialFadeThrough()
+    }
+
     override fun FragStartBinding.setupGUI() {
+        postponeUntilLayout(recycler)
+
         val config = SwiperConfig(
             showCount = 5,
             swipeDirections = SwipeDirection.LEFT or SwipeDirection.RIGHT or SwipeDirection.UP,
@@ -58,7 +67,7 @@ class FragStart : ViewBindingFragment<FragStartBinding>(
         val startColor = requireContext().getColor(R.color.primary)
         val endColor = requireContext().getColor(R.color.secondary)
         val evaluator = ArgbEvaluator()
-        val count = 10
+        val count = 3
 
         fun getColor(pos: Int): Int {
             val fraction = (pos - 1f) / count

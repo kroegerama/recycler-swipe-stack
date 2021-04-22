@@ -4,22 +4,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kroegerama.kaiteki.scale
+import timber.log.Timber
 
 class StackLayoutManager(
     private val config: SwiperConfig = SwiperConfig()
 ) : RecyclerView.LayoutManager() {
 
     override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams =
-        RecyclerView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
     override fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
         detachAndScrapAttachedViews(recycler)
         val showCount = config.showCount
 
+        val itemCount = state.itemCount
+
         if (itemCount > showCount) {
             for (pos in showCount downTo 0) {
                 val layout = recycler.getViewForPosition(pos)
                 addAndMeasureView(layout)
+                layout.translationZ = (-pos).toFloat()
 
                 when {
                     pos == showCount -> {
@@ -37,6 +41,7 @@ class StackLayoutManager(
             for (pos in itemCount - 1 downTo 0) {
                 val layout = recycler.getViewForPosition(pos)
                 addAndMeasureView(layout)
+                layout.translationZ = (-pos).toFloat()
 
                 when {
                     pos > 0 -> {
@@ -66,15 +71,23 @@ class StackLayoutManager(
     }
 
     private fun View.resetTransitions() {
-        clearAnimation()
         scale(1f)
         translationX = 0f
         translationY = 0f
-        animate().alpha(1f)
     }
 
     private fun View.scaleAndTranslateForPosition(pos: Int) {
-        clearAnimation()
+        scale(1f - pos * config.itemScale)
+        val itemTranslate = config.itemTranslate
+        when (config.stackDirection) {
+            StackDirection.Left -> translationX = -pos * measuredWidth * itemTranslate
+            StackDirection.Up -> translationY = -pos * measuredHeight * itemTranslate
+            StackDirection.Right -> translationX = pos * measuredWidth * itemTranslate
+            StackDirection.Down -> translationY = pos * measuredHeight * itemTranslate
+        }
+    }
+
+    private fun View.scaleAndTranslateForPositionAnimated(pos: Int) {
         animate().apply {
             val scale = 1f - pos * config.itemScale
             scaleX(scale)

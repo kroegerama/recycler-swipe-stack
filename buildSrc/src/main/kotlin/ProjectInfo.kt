@@ -1,5 +1,5 @@
 object P {
-    const val projectVersion = "0.9.2"
+    const val projectVersion = "0.9.3"
 
     const val projectGroupId = "com.kroegerama"
     const val libraryArtifactId = "recycler-swipe-stack"

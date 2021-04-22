@@ -2,8 +2,10 @@ package com.kroegerama.reswista.ui
 
 import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.navOptions
 import androidx.navigation.ui.setupWithNavController
 import com.kroegerama.kaiteki.baseui.ViewBindingActivity
+import com.kroegerama.kaiteki.onClick
 import com.kroegerama.reswista.R
 import com.kroegerama.reswista.controller.Persistence
 import com.kroegerama.reswista.databinding.AcMainBinding
@@ -27,5 +29,9 @@ class AcMain : ViewBindingActivity<AcMainBinding>(AcMainBinding::inflate) {
         val navController = (supportFragmentManager.findFragmentById(R.id.navHost) as NavHostFragment).navController
         setSupportActionBar(toolbar)
         toolbar.setupWithNavController(navController)
+
+        btnSwitchFrag.onClick {
+            navController.navigate(R.id.fragStart)//, null, navOptions { popUpTo(R.id.main_nav) { inclusive = true } })
+        }
     }
 }
